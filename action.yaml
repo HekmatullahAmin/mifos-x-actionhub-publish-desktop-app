@@ -105,7 +105,7 @@ runs:
         MAC_APP_DISTRIBUTION_CERTIFICATE_B64: ${{ inputs.mac_app_distribution_certificate_b64 }}
       run: |
         CERT="${RUNNER_TEMP}/mac_app_distribution.p12"
-        printf '%s' "$MAC_APP_DISTRIBUTION_CERTIFICATE_B64" | base64 -D > "$CERT"
+        echo -n "$MAC_APP_DISTRIBUTION_CERTIFICATE_B64" | base64 -D > "$CERT"
         security import "$CERT" -P "$CERTIFICATES_PASSWORD" -A -t cert -f pkcs12 -k "${KEYCHAIN_NAME}"
         security set-key-partition-list -S apple-tool:,apple: -k "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_NAME}"
 
@@ -118,7 +118,7 @@ runs:
         MAC_INSTALLER_DISTRIBUTION_CERTIFICATE_B64: ${{ inputs.mac_installer_distribution_certificate_b64 }}
       run: |
         CERT="${RUNNER_TEMP}/mac_installer_distribution.p12"
-        printf '%s' "$MAC_INSTALLER_DISTRIBUTION_CERTIFICATE_B64" | base64 -D > "$CERT"
+        echo -n "$MAC_INSTALLER_DISTRIBUTION_CERTIFICATE_B64" | base64 -D > "$CERT"
         security import "$CERT" -P "$CERTIFICATES_PASSWORD" -A -t cert -f pkcs12 -k "${KEYCHAIN_NAME}"
         security set-key-partition-list -S apple-tool:,apple: -k "${KEYCHAIN_PASSWORD}" "${KEYCHAIN_NAME}"
 
